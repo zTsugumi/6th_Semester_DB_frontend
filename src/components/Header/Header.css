@@ -1,5 +1,6 @@
 .navbar {
-    display        : flex;
+    color          : #fff;
+    background     : #030303aa;
     align-items    : center;
     justify-content: space-between;
     padding        : 0.5rem 2.5rem;
@@ -9,7 +10,7 @@
 }
 
 .navbar-sticky {
-    background: #333;
+    background: #333333aa;
     position  : fixed;
     top       : 0;
     left      : 0;
@@ -31,7 +32,6 @@
 }
 
 .navbar--link-list {
-    display   : flex;
     list-style: none;
     font      : sans-serif;
 }

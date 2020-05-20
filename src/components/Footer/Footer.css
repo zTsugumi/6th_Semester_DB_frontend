@@ -1,0 +1,33 @@
+.footer {    
+    color          : #fff;
+    background     : #333333aa;    
+    justify-content: space-between;
+    padding        : 1.5rem 1rem;
+    position       : absolute;
+    z-index        : 1;
+    width          : 100%;
+}
+
+.footer--link-list {
+    list-style: none;
+    font      : sans-serif;
+}
+
+.footer--link-item:link {
+    color          : #fff;
+    text-decoration: none;
+    margin         : 0.4rem 1rem 0 0;    
+    cursor         : pointer;
+}
+
+.footer--link-item:visited {
+    color  : #fff;
+    margin : 0.4rem 1rem 0 0;    
+    cursor : pointer;
+}
+
+.footer--link-item:active {
+    color  : teal;
+    margin : 0.4rem 1rem 0 0;    
+    cursor : pointer;
+}
