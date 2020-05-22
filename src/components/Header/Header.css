@@ -39,13 +39,13 @@
     padding: 0
 }
 
-@media (max-width: 767px) {
+@media (max-width: 992px) {
     .navbar--logo {
         display: none;
     }
 }
 
-@media (min-width: 767px) {
+@media (min-width: 992px) {
     .navbar--logout {
         display: none;
     }

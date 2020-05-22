@@ -6,6 +6,7 @@ import Welcome from './Welcome/Welcome';
 import Home from './Home/Home';
 import About from './About/About';
 import Menu from './Menu/Menu';
+import DishDetail from './Menu/Dishdetail';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import AllActions from '../redux/actions/AllActions';
@@ -16,13 +17,18 @@ function Main() {
     const auth = useSelector(state => state.auth);
     const dishes = useSelector(state => state.dishes);
     const staffs = useSelector(state => state.staffs);
+    const comments = useSelector(state => state.comments);
 
     const dispatch = useDispatch();
     const loginUser = (creds) => dispatch(AllActions.AuthActions.loginUser(creds));
     const logoutUser = () => dispatch(AllActions.AuthActions.logoutUser());
 
+    const postComment = (dishId, rating, comment) => dispatch(AllActions.CommentActions.postComment(dishId, rating, comment));
+
+    // Hook effect every render
     useEffect(() => {
         dispatch(AllActions.DishActions.fetchDishes());
+        dispatch(AllActions.CommentActions.fetchComments());
         dispatch(AllActions.StaffActions.fetchStaffs());
     }, [])
 
@@ -57,21 +63,24 @@ function Main() {
         )
     }
 
-    // const DishWithId = ({ match }) => {
-    //     const dishSeletected = dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0];
-    //     const commentsSelected = comments.comments.filter((comment) => comment.dish === match.params.dishId);
+    const DishWithId = ({ match }) => {
+        const dishSeletected = dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0];
+        const commentsSelected = comments.comments.filter((comment) => comment.dish === match.params.dishId);
 
-    //     return (
-    //         <DishDetail dish={dishSeletected}
-    //             isLoading={this.props.dishes.isLoading}
-    //             errMess={this.props.dishes.errMess}
-    //             comments={commentsSelected}
-    //             commentsLoading={this.props.comments.isLoading}
-    //             commentsErrMess={this.props.comments.errMess}
-    //             postComment={this.props.postComment}
-    //         />
-    //     );
-    // }
+        return (
+            <>
+                <Welcome element={element} />
+                <DishDetail dish={dishSeletected}
+                    isLoading={dishes.isLoading}
+                    errMess={dishes.errMess}
+                    comments={commentsSelected}
+                    commentsLoading={comments.isLoading}
+                    commentsErrMess={comments.errMess}
+                    postComment={postComment}
+                />
+            </>
+        );
+    }
 
 
 
@@ -89,7 +98,7 @@ function Main() {
                 <Route path="/welcome" component={HomePage} />
                 <Route exact path="/about" component={AboutPage} />
                 <Route exact path="/menu" component={MenuPage} />
-                {/* <Route path="/menu/:dishId" component={DishWithId} /> */}
+                <Route path="/menu/:dishId" component={DishWithId} />
                 <Redirect to="/welcome" />
             </Switch>
             <Footer />

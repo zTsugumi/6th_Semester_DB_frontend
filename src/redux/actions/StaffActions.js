@@ -11,8 +11,8 @@ const addStaffs = (staffs) => ({
     payload: staffs
 });
 
-const staffsFailed = (errmess) => ({
-    type: ActionTypes.STAFFS_FAILED,
+const addStaffsFailed = (errmess) => ({
+    type: ActionTypes.ADD_STAFFS_FAILED,
     payload: errmess
 });
 
@@ -39,12 +39,12 @@ const fetchStaffs = () => (dispatch) => {
         )
         .then(response => response.json())
         .then(staffs => dispatch(addStaffs(staffs)))
-        .catch(error => dispatch(staffsFailed(error.message)));
+        .catch(error => dispatch(addStaffsFailed(error.message)));
 };
 
 export default {
     staffsLoading,
     addStaffs,
-    staffsFailed,
+    addStaffsFailed,
     fetchStaffs
 }

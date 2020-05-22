@@ -8,7 +8,7 @@ const staffs = (state = { isLoading: true, errMess: null, staffs: [] }, action) 
         case ActionTypes.ADD_STAFFS:
             return { ...state, isLoading: false, errMess: null, staffs: action.payload }
 
-        case ActionTypes.STAFFS_FAILED:
+        case ActionTypes.ADD_STAFFS_FAILED:
             return { ...state, isLoading: false, errMess: action.payload, staffs: [] }
 
         default:

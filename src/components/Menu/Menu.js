@@ -32,7 +32,9 @@ const MenuSection = ({ dishes, type }) => {
                 <div key={dish._id} className="col-12 col-lg-6">
                     <RenderMenuItem dish={dish} />
                 </div>
-            );
+            )
+        else
+            return null;
     });
 
     return (

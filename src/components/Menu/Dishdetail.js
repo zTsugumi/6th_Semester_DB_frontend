@@ -2,38 +2,39 @@ import React, { Component } from 'react';
 import {
     Card, CardImg, CardText, CardImgOverlay, CardBody, CardTitle,
     Breadcrumb, BreadcrumbItem, Button, Modal,
-    ModalHeader, ModalBody, Label, Col, Row
+    ModalHeader, ModalBody, Label, Form, FormGroup, Input
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Control, LocalForm } from 'react-redux-form';
 import { Loading } from '../Loading/Loading';
 import { baseUrl } from '../../shared/baseUrl';
+import Util from '../Alert/Util';
 import FadeIn from 'react-fade-in';
+import './Dishdetail.css';
 
+// ?? Need to handle favorite
+// ?? Need to handle overflow of comments, create a box for comments
+// ?? Bug that react reloading the site when adding comments
 function RenderDish({ dish, favorite, postFavorite }) {
     return (
         <div className="col-12 col-md-5 m-1">
-            <FadeTransform in
-                transformProps={{
-                    exitTranform: 'scale(0.5 translateY(-50%)'
-                }}>
-                <Card>
-                    <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-                    <CardImgOverlay>
-                        <Button outline color="primary" onClick={() => favorite ? console.log('Already favorite') : postFavorite(dish._id)}>
-                            {favorite ?
-                                <span className="fa fa-heart"></span>
-                                :
-                                <span className="fa fa-heart-o"></span>
-                            }
-                        </Button>
-                    </CardImgOverlay>
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
-            </FadeTransform>
+            <Card>
+                <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                <CardImgOverlay>
+                    <Button outline color="primary" onClick={() => favorite ? console.log('Already favorite') : postFavorite(dish._id)}>
+                        {favorite ?
+                            <span className="fa fa-heart"></span>
+                            :
+                            <span className="fa fa-heart-o"></span>
+                        }
+                    </Button>
+                </CardImgOverlay>
+                <CardBody>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText className="text-justify">{dish.description}</CardText>
+                    <CardText>Price: ${dish.price / 100}</CardText>
+                </CardBody>
+            </Card>
+
         </div>
     );
 }
@@ -43,7 +44,6 @@ class CommentForm extends Component {
         super(props);
 
         this.state = {
-            isNavOpen: false,
             isModalOpen: false
         }
 
@@ -57,52 +57,51 @@ class CommentForm extends Component {
         })
     }
 
-    handleSubmit(values) {
+    handleSubmit(event) {
         this.toggleModal();
-        this.props.postComment(this.props.dishId, values.rating, values.comment);
+        this.props.postComment(this.props.dishId, this.rating.value, this.comment.value)
+            .then(
+                (response) => {
+                    if (response.type === 'POST_COMMENT_FAILED')
+                        Util.alert(false, "Post comment is not available for guest", false);
+                }
+            );
+        event.preventDefault();
     }
 
     render() {
         return (
-            <FadeIn>
+            <>
                 <Button outline onClick={this.toggleModal} >
                     <span className="fa fa-pencil fa-lg"></span> Submit Comment
                 </Button>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
-                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
-                            <Row className="form-group">
-                                <Label htmlFor="rating" md={12}>Rating</Label>
-                                <Col md={12}>
-                                    <Control.select model=".rating" id="rating" name="rating"
-                                        className="form-control" defaultValue={1}>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </Control.select>
-                                </Col>
-                            </Row>
-                            <Row className="form-group">
-                                <Label htmlFor="comment" md={12}>Comment</Label>
-                                <Col md={12}>
-                                    <Control.textarea model=".comment" id="comment" name="comment"
-                                        rows="6" className="form-control" />
-                                </Col>
-                            </Row>
-                            <Row className="form-group">
-                                <Col>
-                                    <Button type="submit" color="primary">
-                                        Submit
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </LocalForm>
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup>
+                                <Label htmlFor="rating">Rating</Label>
+                                <Input type="select" id="rating" name="rating"
+                                    innerRef={(input) => this.rating = input} >
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="comment">Comment</Label>
+                                <Input type="textarea" rows="6" id="comment" name="comment"
+                                    innerRef={(input) => this.comment = input} />
+                            </FormGroup>
+                            <Button type="submit" value="submit" color="primary">
+                                Submit
+                            </Button>
+                        </Form>
                     </ModalBody>
                 </Modal>
-            </FadeIn>
+            </>
         )
     };
 }
@@ -113,20 +112,15 @@ function RenderComments({ comments, postComment, dishId }) {
             <div className="col-12 col-md-5 m-1">
                 <h4>Comments</h4>
                 <ul className="row list-unstyled">
-                    <Stagger in>
-                        {comments.map((comment) => {
-                            return (
-                                <Fade in key={comment._id}>
-                                    <div className="col-12 mt-2">
-                                        <li>
-                                            {comment.comment}<br />-- {comment.author.firstname} {comment.author.lastname} ,
-                                            {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.updatedAt)))}
-                                        </li>
-                                    </div>
-                                </Fade>
-                            );
-                        })}
-                    </Stagger>
+                    {comments.map((comment) => {
+                        return (
+                            <div className="col-12 mt-2">
+                                <li>{comment.comment}</li>
+                                <li>Rating: {comment.rating}</li>
+                                <li>-- {comment.author.firstname} {comment.author.lastname} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.updatedAt)))}</li>
+                            </div>
+                        );
+                    })}
                 </ul>
                 <CommentForm dishId={dishId} postComment={postComment} />
             </div>
@@ -158,22 +152,24 @@ const DishDetail = (props) => {
     }
     else if (props.dish != null) {
         return (
-            <div className="container">
-                <div className="row">
-                    <Breadcrumb>
-                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-                    </Breadcrumb>
-                    <div className="col-12">
-                        <h3>{props.dish.name}</h3>
-                        <hr />
+            <FadeIn>
+                <div className="container dishdetail--container">
+                    <div className="row">
+                        <Breadcrumb>
+                            <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                            <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
+                    <div className="row">
+                        <div className="col-12">
+                            <h3>{props.dish.name}</h3>
+                            <hr />
+                        </div>
+                        <RenderDish dish={props.dish} favorite={props.favorite} postFavorite={props.postFavorite} />
+                        <RenderComments comments={props.comments} postComment={props.postComment} dishId={props.dish._id} />
                     </div>
                 </div>
-                <div className="row">
-                    <RenderDish dish={props.dish} favorite={props.favorite} postFavorite={props.postFavorite} />
-                    <RenderComments comments={props.comments} postComment={props.postComment} dishId={props.dish._id} />
-                </div>
-            </div>
+            </FadeIn>
         );
     }
     else

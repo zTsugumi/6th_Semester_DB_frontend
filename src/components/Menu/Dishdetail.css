@@ -1,0 +1,9 @@
+.dishdetail--container {
+    padding-top   : 4rem;
+    padding-bottom: 4rem;
+}
+
+.dishdetail--container .row {
+    padding-top   : 1rem;
+    padding-bottom: 0.5rem;
+}

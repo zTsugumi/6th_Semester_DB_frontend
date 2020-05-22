@@ -11,8 +11,8 @@ const addDishes = (dishes) => ({
     payload: dishes
 });
 
-const dishesFailed = (errmess) => ({
-    type: ActionTypes.DISHES_FAILED,
+const addDishesFailed = (errmess) => ({
+    type: ActionTypes.ADD_DISHES_FAILED,
     payload: errmess
 });
 
@@ -39,12 +39,12 @@ const fetchDishes = () => (dispatch) => {
         )
         .then(response => response.json())
         .then(dishes => dispatch(addDishes(dishes)))
-        .catch(error => dispatch(dishesFailed(error.message)));
+        .catch(error => dispatch(addDishesFailed(error.message)));
 };
 
 export default {
     dishesLoading,
     addDishes,
-    dishesFailed,
+    addDishesFailed,
     fetchDishes
 }

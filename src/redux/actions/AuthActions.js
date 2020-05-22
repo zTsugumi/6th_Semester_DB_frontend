@@ -63,7 +63,7 @@ const loginUser = (creds) => (dispatch) => {
                 throw error;
             }
         })
-        .catch(error => dispatch(loginError(error.message)))
+        .catch(error => dispatch(loginError(error.message)));
 };
 
 const requestLogout = () => {
