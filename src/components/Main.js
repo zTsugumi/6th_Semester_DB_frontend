@@ -36,7 +36,7 @@ function Main() {
 
     const postComments = (newComment) => dispatch(AllActions.CommentActions.postComments(newComment));
 
-    const postReservation = (newreservation) => dispatch(AllActions.ReservationActions.postReservation(newreservation));
+    const postReservations = (newreservation) => dispatch(AllActions.ReservationActions.postReservations(newreservation));
     const resetReservationForm = () => dispatch(actions.reset('reservation'));
 
     const postFavorite = (dishId) => dispatch(AllActions.FavoriteActions.postFavorite(dishId));
@@ -111,7 +111,7 @@ function Main() {
         return (
             <>
                 <Welcome element={element} />
-                <Reservation auth={auth} postReservation={postReservation}
+                <Reservation auth={auth} postReservations={postReservations}
                     resetReservationForm={resetReservationForm} />
             </>
         )
@@ -173,6 +173,7 @@ function Main() {
                 <PrivateRoute path="/profile/reservation" component={() => <ProfilePage type="reservation" />} />
                 <PrivateRoute path="/profile/admin/menu" component={() => <ProfilePage type="admin-menu" />} />
                 <PrivateRoute path="/profile/admin/staff" component={() => <ProfilePage type="admin-staff" />} />
+                <PrivateRoute path="/profile/admin/reservation" component={() => <ProfilePage type="admin-reservation" />} />
                 <Redirect to="/welcome" />
             </Switch>
             <Footer />

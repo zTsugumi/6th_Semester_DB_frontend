@@ -27,7 +27,7 @@ const Reservation = (props) => {
                             For walk-ins, we only seat parties on a first come, first served basis.</p>
                     </div>
                     <div className="col-12 col-md-8">
-                        <ReservationForm postReservation={props.postReservation}
+                        <ReservationForm postReservations={props.postReservations}
                             resetReservationForm={props.resetReservationForm} />
                     </div>
                 </div>

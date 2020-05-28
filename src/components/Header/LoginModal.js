@@ -6,6 +6,7 @@ import {
 import classnames from 'classnames';
 import Util from '../Alert/Util';
 
+// ?? Need validation
 class LoginModal extends Component {
     constructor(props) {
         super(props);
@@ -43,7 +44,14 @@ class LoginModal extends Component {
 
     handleSignup(event) {
         this.props.toggleModal();
-        this.props.signupUser({ username: this.usernameSignup.value, password: this.passwordSignup.value })
+        var newUser = {
+            username: this.usernameSignup.value,
+            password: this.passwordSignup.value,
+            firstname: this.firstname.value,
+            lastname: this.lastname.value,
+        }
+        console.log(newUser);
+        this.props.signupUser(newUser)
             .then(
                 () => {
                     if (this.props.auth.isAuthenticated)
@@ -99,6 +107,20 @@ class LoginModal extends Component {
                     <TabPane tabId="2">
                         <ModalBody>
                             <Form onSubmit={this.handleSignup}>
+                                <FormGroup className="row">
+                                    <Label className="col-12" htmlFor="firstname lastname">Name</Label>
+                                    <div className="col-6">
+                                        <Input type="text" id="firstname" name="firstname"
+                                            placeholder="First name"
+                                            innerRef={(input) => this.firstname = input}
+                                        />
+                                    </div>
+                                    <div className="col-6">
+                                        <Input type="text" id="lastname" name="lastname"
+                                            placeholder="Last name"
+                                            innerRef={(input) => this.lastname = input} />
+                                    </div>
+                                </FormGroup>
                                 <FormGroup>
                                     <Label htmlFor="usernameSignup">Username</Label>
                                     <Input type="text" id="usernameSignup" name="usernameSignup"
@@ -124,7 +146,7 @@ class LoginModal extends Component {
                         </ModalBody>
                     </TabPane>
                 </TabContent>
-            </Modal>
+            </Modal >
         )
     }
 }

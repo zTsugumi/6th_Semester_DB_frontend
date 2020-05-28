@@ -54,7 +54,7 @@ export const UPDATE_STAFF_SUCCESS = 'UPDATE_STAFF_SUCCESS'; // Update view ~ Cha
 export const PUT_STAFF_FAILED = 'PUT_STAFF_FAILED';         // Update staff to db failed, it's triggered when fetch put failed
 
 /******************************************************** DELETE STAFF ******************************************************/
-export const REMOVE_STAFF_SUCCESS = 'REMOVE_STAFF_SUCCESS';   // Remove dish from view ~ Change Redux store
+export const REMOVE_STAFF_SUCCESS = 'REMOVE_STAFF_SUCCESS'; // Remove dish from view ~ Change Redux store
 export const REMOVE_STAFF_FAILED = 'REMOVE_STAFF_FAILED';
 
 
@@ -66,16 +66,38 @@ export const RESERVATIONS_LOADING = 'RESERVATIONS_LOADING';
 export const ADD_RESERVATIONS = 'ADD_RESERVATIONS';         // Add reservations to view ~ Add new reservations to Redux store
 export const RESERVATIONS_FAILED = 'RESERVATIONS_FAILED';   // Add reservations to view failed, it's triggered when fetch failed
 
-/***************************************************** POST RESERVATION *****************************************************/
-export const POST_RESERVATION_FAILED =                      // Post new reservation to db failed, it's triggered when fetch post failed
-    'POST_RESERVATION_FAILED';                              // Here we don't have POST_RESERVATION to add new reservation to view because
-// from server responses all reservations, not just the one we just post
+/***************************************************** POST RESERVATIONS ****************************************************/
+export const POST_RESERVATIONS_FAILED =                     // Post new reservation to db failed, it's triggered when fetch post failed
+    'POST_RESERVATIONS_FAILED';                             // Here we don't have POST_RESERVATION to add new reservation to view because
+                                                            // from server responses all reservations, not just the one we just post
 
-/***************************************************** POST RESERVATION *****************************************************/
+export const REMOVE_RESERVATIONS_SUCCESS =                  // Remove all reservations from view ~ Change Redux store
+    'REMOVE_RESERVATIONS_SUCCESS';
+export const REMOVE_RESERVATIONS_FAILED = 
+    'REMOVE_RESERVATIONS_FAILED';
+
+/****************************************************** PUT RESERVATION *****************************************************/
+export const UPDATE_RESERVATION_SUCCESS =                   // ?? WIP
+    'UPDATE_RESERVATION_SUCCESS';   
+export const PUT_RESERVATION_FAILED =                       // Update reservation to db failed, it's triggered when fetch put failed
+    'PUT_RESERVATION_FAILED';           
+
+/***************************************************** DELETE RESERVATION ***************************************************/
+export const REMOVE_RESERVATION_SUCCESS =                   // Remove reservation from view ~ Change Redux store
+    'REMOVE_RESERVATION_SUCCESS'; 
+export const REMOVE_RESERVATION_FAILED = 
+    'REMOVE_RESERVATION_FAILED';
+
+
+
+
+
+
+/****************************************************** GET FAVORITES *******************************************************/
 export const FAVORITES_LOADING = 'FAVORITES_LOADING';
 export const ADD_FAVORITES = 'ADD_FAVORITES';               // Add favorites to view ~ Add new favorites to Redux store
 export const FAVORITES_FAILED = 'FAVORITES_FAILED';         // Add favorites to view failed, it's triggered when fetch failed
-// Here we don't handle post failed, because it's hard to happen)
+                                                            // Here we don't handle post failed, because it's hard to happen)
 
 
 

@@ -28,10 +28,10 @@ const ReservationForm = (props) => {
             message: values.message
         }
 
-        props.postReservation(reservation)
+        props.postReservations(reservation)
             .then(
                 (response) => {
-                    if (response.type === 'POST_RESERVATION_FAILED')
+                    if (response.type === 'POST_RESERVATIONS_FAILED')
                         Util.alert(false, 'Please check if you already made a reservation on that date. Contact us for more information', false);
                     else
                         Util.alert(false, 'Reservation Successful. We are processing your reservation. Thank you.', false);
