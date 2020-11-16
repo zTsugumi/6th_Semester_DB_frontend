@@ -117,8 +117,8 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 
-export const SIGNUP_REQUEST = 'LOGIN_REQUEST';
-export const SIGNUP_SUCCESS = 'LOGIN_SUCCESS';
-export const SIGNUP_FAILURE = 'LOGIN_FAILURE';
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 
 export const CHECK_JWT = 'CHECK_JWT';                       // WIP

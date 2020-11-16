@@ -15,12 +15,14 @@ const auth = (state = {
             return { ...state, isLoading: false, isAuthenticated: true, errMess: '', token: action.token, isAdmin: action.isAdmin };
         case ActionTypes.LOGIN_FAILURE:
             return { ...state, isLoading: false, isAuthenticated: false, errMess: action.message };
+
         case ActionTypes.SIGNUP_REQUEST:
             return { ...state, isLoading: true, isAuthenticated: false, user: action.creds }
         case ActionTypes.SIGNUP_SUCCESS:
             return { ...state, isLoading: false, isAuthenticated: true, errMess: '', token: action.token };
         case ActionTypes.SIGNUP_FAILURE:
             return { ...state, isLoading: false, isAuthenticated: false, errMess: action.message };
+
         case ActionTypes.LOGOUT_REQUEST:
             return { ...state, isLoadissng: true, isAuthenticated: true };
         case ActionTypes.LOGOUT_SUCCESS:

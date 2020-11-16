@@ -10,8 +10,7 @@ import './Admin.css';
 const items = [
     { name: 'menu', label: 'Menu', link: '/profile/admin/menu' },
     { name: 'staff', label: 'Staff', link: '/profile/admin/staff' },
-    { name: 'reservation', label: 'Reservation', link: '/profile/admin/reservation' },
-    { name: 'users', label: 'User', link: '/profile/admin/user' }
+    { name: 'reservation', label: 'Reservation', link: '/profile/admin/reservation' }
 ]
 
 const Admin = (props) => {

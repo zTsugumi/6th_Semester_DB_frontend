@@ -158,6 +158,8 @@ function Main() {
     // ?? Need to add location map to the end of Welcome page
     // ?? Need to fix alert box for reservation make page go bake to top
     // ?? Need to add edit comment
+    // ?? Problem when multiple windows are open in one single page and login with different accounts => they share same token.
+    //      Need to limit only 1 account can be logged 
     return (
         <div>
             <Header sticky={isSticky} auth={auth}
@@ -173,7 +175,7 @@ function Main() {
                 <PrivateRoute path="/profile/reservation" component={() => <ProfilePage type="reservation" />} />
                 <PrivateRoute path="/profile/admin/menu" component={() => <ProfilePage type="admin-menu" />} />
                 <PrivateRoute path="/profile/admin/staff" component={() => <ProfilePage type="admin-staff" />} />
-                <PrivateRoute path="/profile/admin/reservation" component={() => <ProfilePage type="admin-reservation" />} />
+                <PrivateRoute path="/profile/admin/reservation" component={() => <ProfilePage type="admin-reservation" />} />            
                 <Redirect to="/welcome" />
             </Switch>
             <Footer />

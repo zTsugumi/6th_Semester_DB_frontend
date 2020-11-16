@@ -147,6 +147,9 @@ const signupUser = (creds) => (dispatch) => {
                 // If login was successful, set the token in local storage
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('creds', JSON.stringify(creds));
+
+                dispatch(FavoriteActions.fetchFavorites());
+                dispatch(ReservationActions.fetchReservations());
                 // Dispatch the success action                
                 dispatch(receiveSignup(response));
             }
